@@ -10,7 +10,7 @@
 
 #contentWrapper {
     margin: 5px auto 0px;
-    height: 400px;
+    height: 300px;
     position:relative;
 }
 
@@ -38,6 +38,34 @@
 }
 
 
+
 h1 {
     color: rgb(0, 0, 0);
+}
+
+button {
+    margin: 5px 20px 5px 20px;
+    font-size: 15px;
+}
+
+
+.true-false-btn {
+    font-size: 20px;
+    margin-top: 50px;
+}
+
+.answer-container {
+    display: flex;
+    justify-content: center;
+}
+.answer-container:first-of-type {
+    margin-top: 50px;
+}
+.answer-container > div {
+    margin: 1px 1px 1px 1px;
+    padding: 5px 5px 5px 15px;
+    width: 120px;
+    display: flex;
+    justify-content: flex-end;
+    border: 1px solid black;
 }

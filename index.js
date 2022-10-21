@@ -2,19 +2,27 @@
 const questions = [
     {
         heading: "Fråga 1",
-        question: "Vad är det här?",
-        answer: "En banan"
+        question: "Är jordnöten en nöt?",
+        rightAnswer: "false",
+        type: "true/false",
+        answer: "",
     },
     {
         heading: "Fråga 2",
-        question: "Vad är det här?",
-        answer: "En kiwi"
+        question: "Vad är en rotfrukt?",
+        posibleAnswers: ["Kiwi", "Ananas", "potatis", "Mango"],
+        rightAnswer: "Kiwi",
+        type: "multiple choice",
+        answer: "",
     },
     {
         heading: "Fråga 3",
-        question: "Vad är det här?",
-        answer: "Ett äpple"
-    }
+        question: "Vad brukar man i folkmun normalt inte jämnföra?",
+        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
+        rightAnswer: ["Äpple", "Päron"],
+        type: "checkbox",
+        answer: "",
+    },
 ];
 
 
@@ -49,45 +57,107 @@ contentWrapper.append(newH3, newP, newBtn);
 function quiz(){
     contentWrapper.innerHTML = "";
     if(currentQuestion >= questions.length){
-        newH3 = document.createElement("h3");
+        let newH3 = document.createElement("h3");
         newH3.innerText = "Slut";
         contentWrapper.append(newH3);
     }else{
         // Create heading
-        newH3 = document.createElement("h3");
+        let newH3 = document.createElement("h3");
         newH3.innerText = questions[currentQuestion].heading;
+        contentWrapper.append(newH3);
     
         // Create question
-        newP = document.createElement("p");
+        let newP = document.createElement("p");
         newP.innerText = questions[currentQuestion].question;
+        contentWrapper.append(newP);
     
         // Create possible answers
+        if (questions[currentQuestion].type === "true/false"){
+            // False button
+            let falseBtn = document.createElement("button");
+            falseBtn.innerText = "Falskt";
+            falseBtn.style.backgroundColor = "red";
+            falseBtn.classList = "true-false-btn";
+            
+            // True button
+            let trueBtn = document.createElement("button");
+            trueBtn.innerText = "Sant";
+            trueBtn.style.backgroundColor = "green";
+            trueBtn.classList = "true-false-btn";
+
+            contentWrapper.append(falseBtn, trueBtn);
+        }else if (questions[currentQuestion].type === "multiple choice"){
+            let radioBtn = document.createElement("var");
+            radioBtn.innerHTML = `
+            <div class="answer-container">
+                <div>
+                    <label for="1">${questions[currentQuestion].posibleAnswers[0]}</label>
+                    <input type="radio" name="radioAnswer" id="1">
+                </div>
+                <div>
+                    <label for="2">${questions[currentQuestion].posibleAnswers[1]}</label>
+                    <input type="radio" name="radioAnswer" id="2">
+                </div>
+            </div>
+            <div class="answer-container">
+                <div>
+                    <label for="3">${questions[currentQuestion].posibleAnswers[2]}</label>
+                    <input type="radio" name="radioAnswer" id="3">
+                </div>
+                <div>
+                    <label for="4">${questions[currentQuestion].posibleAnswers[3]}</label>
+                    <input type="radio" name="radioAnswer" id="4">
+                </div>
+            </div>`
+            contentWrapper.append(radioBtn);
+        }else if (questions[currentQuestion].type === "checkbox"){
+            let checkboxes = document.createElement("var");
+            checkboxes.innerHTML = `
+            <div class="answer-container">
+                <div>
+                    <label for="1">${questions[currentQuestion].posibleAnswers[0]}</label>
+                    <input type="checkbox" name="radioAnswer" id="1">
+                </div>
+                <div>
+                    <label for="2">${questions[currentQuestion].posibleAnswers[1]}</label>
+                    <input type="checkbox" name="radioAnswer" id="2">
+                </div>
+            </div>
+            <div class="answer-container">
+                <div>
+                    <label for="3">${questions[currentQuestion].posibleAnswers[2]}</label>
+                    <input type="checkbox" name="radioAnswer" id="3">
+                </div>
+                <div>
+                    <label for="4">${questions[currentQuestion].posibleAnswers[3]}</label>
+                    <input type="checkbox" name="radioAnswer" id="4">
+                </div>
+            </div>`
+            contentWrapper.append(checkboxes);
+        }
         
         
         // Create navigation buttons
-        backBtn = document.createElement("button");
-        backBtn.id = "backBtn";
-        backBtn.innerText = "Tillbaka";
-        backBtn.addEventListener("click", () => {
+        let prevBtn = document.createElement("button");
+        prevBtn.id = "backBtn";
+        prevBtn.innerText = "Tillbaka";
+        prevBtn.addEventListener("click", () => {
             currentQuestion--;
             quiz()
         })
         if (currentQuestion === 0){ // If first question dont show back button
-            backBtn.style.visibility = "hidden";
+            prevBtn.style.visibility = "hidden";
         }
         
-        nextBtn = document.createElement("button");
+        let nextBtn = document.createElement("button");
         nextBtn.id = "nextBtn";
         nextBtn.innerText = "Nästa";
         nextBtn.addEventListener("click", () => {
             currentQuestion++;
             quiz()
         })
-        
-        // Print out the question
-        contentWrapper.append(newH3, newP, backBtn, nextBtn);
+        contentWrapper.append(prevBtn, nextBtn);
     }
-
 }
 // End of main quiz function
 
