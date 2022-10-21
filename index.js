@@ -2,49 +2,92 @@
 const questions = [
     {
         heading: "Fråga 1",
-        quesion: "Vad är det här?",
+        question: "Vad är det här?",
         answer: "En banan"
     },
     {
         heading: "Fråga 2",
-        quesion: "Vad är det här?",
+        question: "Vad är det här?",
         answer: "En kiwi"
     },
     {
         heading: "Fråga 3",
-        quesion: "Vad är det här?",
+        question: "Vad är det här?",
         answer: "Ett äpple"
     }
 ];
 
 
-// Start
+// Start of code ---------------------------------------------------------------
 
+// Variables
 let contentWrapper = document.querySelector("#contentWrapper");
 let questionDiv = document.querySelector("#questionDiv");
 
-let h3 = document.createElement("h3");
-let p = document.createElement("p");
-let btn = document.createElement("button");
+let currentQuestion = 0;
 
-// Tryck fram lite välkomsttext
-let newH3 = h3;
+
+
+// Welcome message when landing on this website
+let newH3 = document.createElement("h3");;
 newH3.innerText = "Välkommen till Ankademins quiz!";
 
-let newP = p;
+let newP = document.createElement("p");
 newP.innerText = `Tryck på startknappen för att börja spelet
 och få 10st frågor att svara på.`
 
-let newBtn = btn;
-newBtn.innerText = "Starta quizzzet!"
-newBtn.addEventListener("click", quiz);
-
+let newBtn = document.createElement("button");
+newBtn.innerText = "Starta quizzzet!";
+newBtn.addEventListener("click", () => {
+    quiz() // Run the quiz when push startbutton
+});
 contentWrapper.append(newH3, newP, newBtn);
+// End of welcome message
 
 
-// Funktionen som kör igenom alla frågorna
+// Main quiz function that loops through all questions
 function quiz(){
     contentWrapper.innerHTML = "";
-
+    if(currentQuestion >= questions.length){
+        newH3 = document.createElement("h3");
+        newH3.innerText = "Slut";
+        contentWrapper.append(newH3);
+    }else{
+        // Create heading
+        newH3 = document.createElement("h3");
+        newH3.innerText = questions[currentQuestion].heading;
     
+        // Create question
+        newP = document.createElement("p");
+        newP.innerText = questions[currentQuestion].question;
+    
+        // Create possible answers
+        
+        
+        // Create navigation buttons
+        backBtn = document.createElement("button");
+        backBtn.id = "backBtn";
+        backBtn.innerText = "Tillbaka";
+        backBtn.addEventListener("click", () => {
+            currentQuestion--;
+            quiz()
+        })
+        if (currentQuestion === 0){ // If first question dont show back button
+            backBtn.style.visibility = "hidden";
+        }
+        
+        nextBtn = document.createElement("button");
+        nextBtn.id = "nextBtn";
+        nextBtn.innerText = "Nästa";
+        nextBtn.addEventListener("click", () => {
+            currentQuestion++;
+            quiz()
+        })
+        
+        // Print out the question
+        contentWrapper.append(newH3, newP, backBtn, nextBtn);
+    }
+
 }
+// End of main quiz function
+

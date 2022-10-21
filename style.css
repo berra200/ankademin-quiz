@@ -11,6 +11,7 @@
 #contentWrapper {
     margin: 5px auto 0px;
     height: 400px;
+    position:relative;
 }
 
 #footer {
@@ -18,11 +19,24 @@
     margin: 0px auto 0px;
 }
 
+#nextBtn {
+    position: absolute;
+    right: 20px;
+    bottom:   20px;
+}
+
+#backBtn {
+    position: absolute;
+    left: 20px;
+    bottom:   20px;
+}
+
 .wrapper {
     max-width: 450px;
     height: 50px;
     border-radius: 5px;
 }
+
 
 h1 {
     color: rgb(0, 0, 0);
