@@ -52,6 +52,8 @@ button {
 .true-false-btn {
     font-size: 20px;
     margin-top: 50px;
+    border-radius: 3px;
+    border: 1.5px solid black;
 }
 
 .answer-container {
@@ -68,4 +70,10 @@ button {
     display: flex;
     justify-content: flex-end;
     border: 1px solid black;
+}
+
+.selected {
+    box-shadow: 0 0 5px;
+    font-weight: bold;
+    border: 2px solid black;
 }
