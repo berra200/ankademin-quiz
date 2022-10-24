@@ -3,24 +3,16 @@ const questions = [
     {
         heading: "Fråga 1",
         question: "Är jordnöten en nöt?",
-        rightAnswer: "false",
+        rightAnswer: "Falskt",
         type: "true/false",
-        answer: "",
+        answer: [],
     },
     {
         heading: "Fråga 2",
         question: "Vad är en rotfrukt?",
-        posibleAnswers: ["Kiwi", "Ananas", "potatis", "Mango"],
-        rightAnswer: "Kiwi",
+        posibleAnswers: ["Kiwi", "Ananas", "Potatis", "Mango"],
+        rightAnswer: "Potatis",
         type: "multiple choice",
-        answer: "",
-    },
-    {
-        heading: "Fråga 3",
-        question: "Vad brukar man i folkmun normalt inte jämnföra?",
-        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
-        rightAnswer: ["Äpple", "Päron"],
-        type: "checkbox",
         answer: [],
     },
     {
@@ -31,6 +23,14 @@ const questions = [
         type: "checkbox",
         answer: [],
     },
+    // {
+    //     heading: "Fråga 4",
+    //     question: "Vad brukar man i folkmun normalt inte jämnföra?",
+    //     posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
+    //     rightAnswer: ["Äpple", "Päron"],
+    //     type: "checkbox",
+    //     answer: [],
+    // },
 ];
 
 
@@ -52,16 +52,25 @@ function trueFalseSelected(btn) {
     btn.classList.add("selected");
 }
 
+// Sort array and make it to a string then compare them and return true or false
+function arrayEquals(arr1, arr2){
+    arr1.sort();
+    arr1 = arr1.toString();
+    arr2.sort();
+    arr2 = arr2.toString();
+    return arr1 === arr2;
+}
+
 // Saves the selected value when navigating through the questions
 function navigation(btn){
     if (questions[currentQuestion].type === "true/false" && document.querySelector(".selected")){
         // Loop through all selected items and save its value
-        questions[currentQuestion].answer = document.querySelector(".selected").innerText;
-    }else if(questions[currentQuestion].type === "multiple choice" && document.querySelector("[name='radioAnswer']:checked")){
-        questions[currentQuestion].answer = document.querySelector("[name='radioAnswer']:checked").value;
+        questions[currentQuestion].answer.push(document.querySelector(".selected").innerText);
+    }else if(questions[currentQuestion].type === "multiple choice" && document.querySelector("[name='inputAnswer']:checked")){
+        questions[currentQuestion].answer.push(document.querySelector("[name='inputAnswer']:checked").value);
     }else if (questions[currentQuestion].type === "checkbox"){
         questions[currentQuestion].answer.length = 0;
-        document.querySelectorAll("[name='checkboxAnswer']:checked").forEach(e => {
+        document.querySelectorAll("[name='inputAnswer']:checked").forEach(e => {
             questions[currentQuestion].answer.push(e.value);
         })
     }
@@ -137,65 +146,44 @@ function quiz(){
             }
 
             contentWrapper.append(falseBtn, trueBtn);
-        }else if (questions[currentQuestion].type === "multiple choice"){ // Questions with 4 alternative but 1 correct answer
-            let radioBtn = document.createElement("var");
-            radioBtn.innerHTML = `
+        }else{
+            let answerDiv = document.createElement("div");
+            answerDiv.innerHTML = `
             <div class="answer-container">
                 <div>
                     <label for="1">${questions[currentQuestion].posibleAnswers[0]}</label>
-                    <input type="radio" name="radioAnswer" value="${questions[currentQuestion].posibleAnswers[0]}">
+                    <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[0]}">
                 </div>
                 <div>
                     <label for="2">${questions[currentQuestion].posibleAnswers[1]}</label>
-                    <input type="radio" name="radioAnswer" value="${questions[currentQuestion].posibleAnswers[1]}">
+                    <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[1]}">
                 </div>
             </div>
             <div class="answer-container">
                 <div>
                     <label for="3">${questions[currentQuestion].posibleAnswers[2]}</label>
-                    <input type="radio" name="radioAnswer" value="${questions[currentQuestion].posibleAnswers[2]}">
+                    <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[2]}">
                 </div>
                 <div>
                     <label for="4">${questions[currentQuestion].posibleAnswers[3]}</label>
-                    <input type="radio" name="radioAnswer" value="${questions[currentQuestion].posibleAnswers[3]}">
+                    <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[3]}">
                 </div>
             </div>`
-            contentWrapper.append(radioBtn);
+            contentWrapper.append(answerDiv);
+            
+            if (questions[currentQuestion].type === "multiple choice"){
+                document.querySelectorAll("[name='inputAnswer']").forEach(input => {
+                    input.type = "radio";
+                })
+            }else{
+                document.querySelectorAll("[name='inputAnswer']").forEach(input => {
+                    input.type = "checkbox";
+                })
+            }
+
 
             // Check if there are any saved answers and check the correct box
-            let checkbox = document.querySelectorAll("[name='radioAnswer']")
-            checkbox.forEach(e => {
-                if (questions[currentQuestion].answer === e.value){
-                    e.checked = true;
-                }
-            })
-        }else if (questions[currentQuestion].type === "checkbox"){ // Questions witch 1-3 correct answers
-            let checkboxes = document.createElement("var");
-            checkboxes.innerHTML = `
-            <div class="answer-container">
-                <div>
-                    <label for="1">${questions[currentQuestion].posibleAnswers[0]}</label>
-                    <input type="checkbox" name="checkboxAnswer" value="${questions[currentQuestion].posibleAnswers[0]}">
-                </div>
-                <div>
-                    <label for="2">${questions[currentQuestion].posibleAnswers[1]}</label>
-                    <input type="checkbox" name="checkboxAnswer" value="${questions[currentQuestion].posibleAnswers[1]}">
-                </div>
-            </div>
-            <div class="answer-container">
-                <div>
-                    <label for="3">${questions[currentQuestion].posibleAnswers[2]}</label>
-                    <input type="checkbox" name="checkboxAnswer" value="${questions[currentQuestion].posibleAnswers[2]}">
-                </div>
-                <div>
-                    <label for="4">${questions[currentQuestion].posibleAnswers[3]}</label>
-                    <input type="checkbox" name="checkboxAnswer" value="${questions[currentQuestion].posibleAnswers[3]}">
-                </div>
-            </div>`
-            contentWrapper.append(checkboxes);
-
-            // Check if there are any saved answers and check the correct box
-            document.querySelectorAll("[name='checkboxAnswer']").forEach(e => {
+            document.querySelectorAll("[name='inputAnswer']").forEach(e => {
                 if (questions[currentQuestion].answer.includes(e.value)){
                     e.checked = true;
                 }
@@ -223,17 +211,50 @@ function quiz(){
 
         contentWrapper.append(prevBtn, nextBtn);
     }else{
+        // Correct answers and print out results
+        let points = 0;
         
+        let div = document.createElement("div");
+        div.classList.add("answer-container");
+        let list = document.createElement("ul");
+        list.classList.add("list");
+        div.append(list);
+        
+        questions.forEach(question => {
+            let li = document.createElement("li");
+            if (question.answer.length !== 0){
+                if (question.type === "checkbox" && arrayEquals(question.answer, question.rightAnswer)
+                || question.rightAnswer.includes(question.answer)){
+                    li.innerText = `${question.heading}: svarade du rätt på!`;
+                    li.style.color = "green";
+                    points++;
+                }else{
+                    li.innerText = `${question.heading}: svarade du fel på.`;
+                    li.style.color = "red";
+                }
+            }else{
+                li.innerText = `${question.heading}: svarade du inte på.`;
+            }
+            list.append(li);
+        });
+        
+        let infoBox = document.createElement("div");
+        infoBox.classList = "info-box";
+        let message = document.createElement("h3");
+        message.innerText = `Du fick ${points}/${questions.length} poäng vilket är `;
+        infoBox.append(message);
+
+        if (points / questions.length > 0.75){
+            infoBox.style.backgroundColor = "green";
+            message.innerText += "mycket väl godkänt"
+        }else if(points / questions.length >= 0.5){
+            infoBox.style.backgroundColor = "orange";
+            message.innerText += "godkänt"
+        }else{
+            infoBox.style.backgroundColor = "red";
+            message.innerText += "underkänt"
+        }
+        
+        contentWrapper.append(infoBox, div);
     }
 }
-// End of main quiz function
-
-
-
-
-
-// Notes and saved stuff for later use
-
-// Use this to get selected button on true or false questions
-// console.log(document.querySelector(".selected").innerText);
-
