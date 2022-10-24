@@ -54,8 +54,6 @@ function trueFalseSelected(btn) {
 
 // Saves the selected value when navigating through the questions
 function navigation(btn){
-    // questions[currentQuestion].answer = ""; // Empty old answers
-
     if (questions[currentQuestion].type === "true/false" && document.querySelector(".selected")){
         // Loop through all selected items and save its value
         questions[currentQuestion].answer = document.querySelector(".selected").innerText;
@@ -103,11 +101,7 @@ contentWrapper.append(newH3, newP, newBtn);
 // Main quiz function that loops through all questions
 function quiz(){
     contentWrapper.innerHTML = "";
-    if(currentQuestion >= questions.length){
-        let newH3 = document.createElement("h3");
-        newH3.innerText = "Slut";
-        contentWrapper.append(newH3);
-    }else{
+    if(currentQuestion < questions.length){
         // Create heading
         let newH3 = document.createElement("h3");
         newH3.innerText = questions[currentQuestion].heading;
@@ -201,8 +195,7 @@ function quiz(){
             contentWrapper.append(checkboxes);
 
             // Check if there are any saved answers and check the correct box
-            let checkbox = document.querySelectorAll("[name='checkboxAnswer']")
-            checkbox.forEach(e => {
+            document.querySelectorAll("[name='checkboxAnswer']").forEach(e => {
                 if (questions[currentQuestion].answer.includes(e.value)){
                     e.checked = true;
                 }
@@ -221,10 +214,16 @@ function quiz(){
         
         let nextBtn = document.createElement("button");
         nextBtn.id = "nextBtn";
-        nextBtn.innerText = "Nästa";
+        if (currentQuestion === questions.length - 1){ // If last question change text in button
+            nextBtn.innerText = "Lämna in";
+        }else{
+            nextBtn.innerText = "Nästa";
+        }
         nextBtn.addEventListener("click", function() { navigation(this) });
 
         contentWrapper.append(prevBtn, nextBtn);
+    }else{
+        
     }
 }
 // End of main quiz function
