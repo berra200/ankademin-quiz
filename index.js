@@ -23,14 +23,62 @@ const questions = [
         type: "checkbox",
         answer: [],
     },
-    // {
-    //     heading: "Fråga 4",
-    //     question: "Vad brukar man i folkmun normalt inte jämnföra?",
-    //     posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
-    //     rightAnswer: ["Äpple", "Päron"],
-    //     type: "checkbox",
-    //     answer: [],
-    // },
+    {
+        heading: "Fråga 4",
+        question: "Vad brukar man i folkmun normalt inte jämnföra?",
+        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
+        rightAnswer: ["Äpple", "Päron"],
+        type: "checkbox",
+        answer: [],
+    },
+    {
+        heading: "Fråga 5",
+        question: "Vad brukar man i folkmun normalt inte jämnföra?",
+        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
+        rightAnswer: ["Äpple", "Päron"],
+        type: "checkbox",
+        answer: [],
+    },
+    {
+        heading: "Fråga 6",
+        question: "Vad brukar man i folkmun normalt inte jämnföra?",
+        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
+        rightAnswer: ["Äpple", "Päron"],
+        type: "checkbox",
+        answer: [],
+    },
+    {
+        heading: "Fråga 7",
+        question: "Vad brukar man i folkmun normalt inte jämnföra?",
+        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
+        rightAnswer: ["Äpple", "Päron"],
+        type: "checkbox",
+        answer: [],
+    },
+    {
+        heading: "Fråga 8",
+        question: "Vad brukar man i folkmun normalt inte jämnföra?",
+        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
+        rightAnswer: ["Äpple", "Päron"],
+        type: "checkbox",
+        answer: [],
+    },
+    {
+        heading: "Fråga 9",
+        question: "Vad brukar man i folkmun normalt inte jämnföra?",
+        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
+        rightAnswer: ["Äpple", "Päron"],
+        type: "checkbox",
+        answer: [],
+    },
+    {
+        heading: "Fråga 10",
+        question: "Vad brukar man i folkmun normalt inte jämnföra?",
+        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
+        rightAnswer: ["Äpple", "Päron"],
+        type: "checkbox",
+        answer: [],
+    },
 ];
 
 
@@ -65,7 +113,7 @@ function arrayEquals(arr1, arr2){
 function navigation(btn){
     if (questions[currentQuestion].type === "true/false" && document.querySelector(".selected")){
         // Loop through all selected items and save its value
-        questions[currentQuestion].answer.push(document.querySelector(".selected").innerText);
+        questions[currentQuestion].answer[0] = document.querySelector(".selected").innerText;
     }else if(questions[currentQuestion].type === "multiple choice" && document.querySelector("[name='inputAnswer']:checked")){
         questions[currentQuestion].answer.push(document.querySelector("[name='inputAnswer']:checked").value);
     }else if (questions[currentQuestion].type === "checkbox"){
@@ -139,9 +187,10 @@ function quiz(){
             trueBtn.addEventListener("click", function() { trueFalseSelected(this) });
 
             // If already answerd, set "selected" class on the selected buttton
-            if (questions[currentQuestion].answer === "Falskt"){
+            console.log(questions[currentQuestion].answer)
+            if (questions[currentQuestion].answer[0] === "Falskt"){
                 falseBtn.classList.add("selected");
-            }else if (questions[currentQuestion].answer === "Sant"){
+            }else if (questions[currentQuestion].answer[0] === "Sant"){
                 trueBtn.classList.add("selected");
             }
 
@@ -150,24 +199,24 @@ function quiz(){
             let answerDiv = document.createElement("div");
             answerDiv.innerHTML = `
             <div class="answer-container">
-                <div>
-                    <label for="1">${questions[currentQuestion].posibleAnswers[0]}</label>
-                    <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[0]}">
-                </div>
-                <div>
-                    <label for="2">${questions[currentQuestion].posibleAnswers[1]}</label>
-                    <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[1]}">
-                </div>
+                <label>
+                ${questions[currentQuestion].posibleAnswers[0]}
+                <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[0]}">
+                </label>
+                <label>
+                ${questions[currentQuestion].posibleAnswers[1]}
+                <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[1]}">
+                </label>
             </div>
             <div class="answer-container">
-                <div>
-                    <label for="3">${questions[currentQuestion].posibleAnswers[2]}</label>
-                    <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[2]}">
-                </div>
-                <div>
-                    <label for="4">${questions[currentQuestion].posibleAnswers[3]}</label>
-                    <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[3]}">
-                </div>
+                <label>
+                ${questions[currentQuestion].posibleAnswers[2]}
+                <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[2]}">
+                </label>
+                <label>
+                ${questions[currentQuestion].posibleAnswers[3]}
+                <input name="inputAnswer" value="${questions[currentQuestion].posibleAnswers[3]}">
+                </label>
             </div>`
             contentWrapper.append(answerDiv);
             
@@ -215,7 +264,7 @@ function quiz(){
         let points = 0;
         
         let div = document.createElement("div");
-        div.classList.add("answer-container");
+        div.classList.add("points-container");
         let list = document.createElement("ul");
         list.classList.add("list");
         div.append(list);
@@ -246,13 +295,13 @@ function quiz(){
 
         if (points / questions.length > 0.75){
             infoBox.style.backgroundColor = "green";
-            message.innerText += "mycket väl godkänt"
+            message.innerText += "mycket väl godkänt."
         }else if(points / questions.length >= 0.5){
             infoBox.style.backgroundColor = "orange";
-            message.innerText += "godkänt"
+            message.innerText += "godkänt."
         }else{
             infoBox.style.backgroundColor = "red";
-            message.innerText += "underkänt"
+            message.innerText += "underkänt."
         }
         
         contentWrapper.append(infoBox, div);

@@ -3,8 +3,8 @@
 }
 
 #header {
-    margin: 5px auto 0px;
-    height: 50px;
+    margin: auto;
+    line-height: 50px;
     background-color: rgb(180, 180, 180);
 }
 
@@ -18,6 +18,10 @@
 #footer {
     background-color: rgb(180, 180, 180);
     margin: 0px auto 0px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    line-height: 1px;
+    height: auto;
 }
 
 #nextBtn {
@@ -63,13 +67,20 @@ button {
 .answer-container:first-of-type {
     margin-top: 50px;
 }
-.answer-container > div {
+.answer-container > label {
     margin: 1px 1px 1px 1px;
     padding: 5px 5px 5px 15px;
     width: 120px;
     display: flex;
     justify-content: flex-end;
     border: 1px solid black;
+}
+
+.points-container {
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+    height: 260px;
 }
 
 .list {
