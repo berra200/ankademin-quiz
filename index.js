@@ -187,7 +187,6 @@ function quiz(){
             trueBtn.addEventListener("click", function() { trueFalseSelected(this) });
 
             // If already answerd, set "selected" class on the selected buttton
-            console.log(questions[currentQuestion].answer)
             if (questions[currentQuestion].answer[0] === "Falskt"){
                 falseBtn.classList.add("selected");
             }else if (questions[currentQuestion].answer[0] === "Sant"){
@@ -230,7 +229,6 @@ function quiz(){
                 })
             }
 
-
             // Check if there are any saved answers and check the correct box
             document.querySelectorAll("[name='inputAnswer']").forEach(e => {
                 if (questions[currentQuestion].answer.includes(e.value)){
@@ -261,7 +259,11 @@ function quiz(){
         contentWrapper.append(prevBtn, nextBtn);
     }else{
         // Correct answers and print out results
-        let points = 0;
+        let points = {
+            got: 0,
+            max: questions.length,
+            percent: () => points.got / points.max,
+        };
         
         let div = document.createElement("div");
         div.classList.add("points-container");
@@ -276,7 +278,7 @@ function quiz(){
                 || question.rightAnswer.includes(question.answer)){
                     li.innerText = `${question.heading}: svarade du rätt på!`;
                     li.style.color = "green";
-                    points++;
+                    points.got++;
                 }else{
                     li.innerText = `${question.heading}: svarade du fel på.`;
                     li.style.color = "red";
@@ -290,13 +292,13 @@ function quiz(){
         let infoBox = document.createElement("div");
         infoBox.classList = "info-box";
         let message = document.createElement("h3");
-        message.innerText = `Du fick ${points}/${questions.length} poäng vilket är `;
+        message.innerText = `Du fick ${points.got}/${questions.length} poäng vilket är `;
         infoBox.append(message);
 
-        if (points / questions.length > 0.75){
+        if (points.percent() > 0.75){
             infoBox.style.backgroundColor = "green";
             message.innerText += "mycket väl godkänt."
-        }else if(points / questions.length >= 0.5){
+        }else if(points.percent() >= 0.5){
             infoBox.style.backgroundColor = "orange";
             message.innerText += "godkänt."
         }else{
