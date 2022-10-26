@@ -1,9 +1,9 @@
 // Questions
-const questions = [
+const data = [
     {
         heading: "Fråga 1",
         question: "Är jordnöten en nöt?",
-        rightAnswer: "Falskt",
+        rightAnswer: ["Falskt"],
         type: "true/false",
         answer: [],
     },
@@ -11,7 +11,7 @@ const questions = [
         heading: "Fråga 2",
         question: "Vad är en rotfrukt?",
         posibleAnswers: ["Kiwi", "Ananas", "Potatis", "Mango"],
-        rightAnswer: "Potatis",
+        rightAnswer: ["Potatis"],
         type: "multiple choice",
         answer: [],
     },
@@ -89,6 +89,9 @@ let contentWrapper = document.querySelector("#contentWrapper");
 let questionDiv = document.querySelector("#questionDiv");
 
 let currentQuestion = 0;
+let darkmode = true;
+let questions = JSON.parse(JSON.stringify(data));
+
 
 
 
@@ -136,23 +139,50 @@ function navigation(btn){
     
 }
 
+// Changes class on body and icon inside button
+function darkmodeBtn(){
+    let darkmodeBtn = document.querySelector("#darkmodeBtn")
+    if (darkmode){
+        document.body.className = "lightmode";
+        darkmodeBtn.innerText = "☽";
+        darkmode = false;
+    }else{
+        document.body.className = "darkmode";
+        darkmodeBtn.innerText = "☼";
+        darkmode = true;
+    }   
+}
 
+// Reset the game without loosing dark/light-mode
+function resetBtn(){
+    currentQuestion = 0;
+    questions = JSON.parse(JSON.stringify(data));
+    welcomeMsg();
+}
+
+
+// Start of actual program code ☼/☽
 
 // Welcome message when landing on this website
-let newH3 = document.createElement("h3");;
-newH3.innerText = "Välkommen till Ankademins quiz!";
+welcomeMsg();
+function welcomeMsg(){
+    contentWrapper.innerHTML = "";
+    let newH3 = document.createElement("h3");;
+    newH3.innerText = "Välkommen till Ankademins quiz!";
+    
+    let newP = document.createElement("p");
+    newP.innerText = `Tryck på startknappen för att börja spelet
+    och få 10st frågor att svara på.`
+    
+    let newBtn = document.createElement("button");
+    newBtn.innerText = "Starta quizzzet!";
+    newBtn.addEventListener("click", () => {
+        currentQuestion = 0;
+        quiz() // Run the quiz when push startbutton
+    });
+    contentWrapper.append(newH3, newP, newBtn);
+}
 
-let newP = document.createElement("p");
-newP.innerText = `Tryck på startknappen för att börja spelet
-och få 10st frågor att svara på.`
-
-let newBtn = document.createElement("button");
-newBtn.innerText = "Starta quizzzet!";
-newBtn.addEventListener("click", () => {
-    quiz() // Run the quiz when push startbutton
-});
-contentWrapper.append(newH3, newP, newBtn);
-// End of welcome message
 
 
 // Main quiz function that loops through all questions
@@ -267,26 +297,39 @@ function quiz(){
         
         let div = document.createElement("div");
         div.classList.add("points-container");
-        let list = document.createElement("ul");
+        let list = document.createElement("dl");
         list.classList.add("list");
         div.append(list);
         
         questions.forEach(question => {
-            let li = document.createElement("li");
+            let term = document.createElement("dt");
+            let youAnswerd = document.createElement("dd");
+            let rightAnswers = document.createElement("dd");
             if (question.answer.length !== 0){
-                if (question.type === "checkbox" && arrayEquals(question.answer, question.rightAnswer)
-                || question.rightAnswer.includes(question.answer)){
-                    li.innerText = `${question.heading}: svarade du rätt på!`;
-                    li.style.color = "green";
+                if (arrayEquals(question.answer, question.rightAnswer)){
+                    term.innerText = `${question.heading}:  Rätt!`;
+                    term.style.color = "green";
                     points.got++;
                 }else{
-                    li.innerText = `${question.heading}: svarade du fel på.`;
-                    li.style.color = "red";
+                    term.innerText = `${question.heading}:  Fel.`;
+                    term.style.color = "red";
+                    youAnswerd.innerText += "Du svarade: ";
+                    question.answer.forEach((answer) => { youAnswerd.innerText += answer + ", " })
+                    youAnswerd.innerText = youAnswerd.innerText.substring(0, youAnswerd.innerText.length - 2);
+                    youAnswerd.innerHTML += `.
+                    `;
                 }
             }else{
-                li.innerText = `${question.heading}: svarade du inte på.`;
+                term.innerText = `${question.heading}: svarade du inte på.`;
             }
-            list.append(li);
+            rightAnswers.innerText += "Rätt svar var: ";
+            question.rightAnswer.forEach(rightAnswer => rightAnswers.innerText += rightAnswer + ", ")
+            rightAnswers.innerText = rightAnswers.innerText.substring(0, rightAnswers.innerText.length - 2);
+            rightAnswers.innerText += `.
+            
+            `;
+
+            list.append(term, youAnswerd, rightAnswers);
         });
         
         let infoBox = document.createElement("div");
