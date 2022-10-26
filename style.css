@@ -15,7 +15,6 @@
     --button-background-color: rgb(180, 180, 180);
 }
 
-
 #all {
     text-align: center;
     margin: auto;
@@ -37,18 +36,17 @@
     border-radius: 5px 5px 0px 0px;
     height: 60px;
 }
-
 #header > div{
+    display: flex;
     position: relative;
     right: -25px;
 }
-
 #header button{
     background-color: rgb(180, 180, 180);
     height: 30px;
     width: 30px;
     box-shadow: 0 0 3px;
-    margin: 1px;
+    margin: 5px;
 }
 
 #contentWrapper {
@@ -87,7 +85,6 @@ button {
     margin: 5px 20px 5px 20px;
     font-size: 15px;
 }
-
 
 label {
     background-color: var(--button-background-color);
@@ -143,7 +140,6 @@ label {
     height: 50px;
     line-height: 50px;
 }
-
 
 
 /* Scrollbar styling */
