@@ -2,81 +2,81 @@
 const data = [
     {
         heading: "Fråga 1",
-        question: "Är jordnöten en nöt?",
-        rightAnswer: ["Falskt"],
+        question: "Började halloween i Irland?",
+        rightAnswer: ["Sant"],
         type: "true/false",
         answer: [],
     },
     {
         heading: "Fråga 2",
-        question: "Vad är en rotfrukt?",
-        posibleAnswers: ["Kiwi", "Ananas", "Potatis", "Mango"],
-        rightAnswer: ["Potatis"],
+        question: 'Vad betyder ordet "Halloween"?',
+        posibleAnswers: ["Dödens natt", "Helgons kväll", "Återträffsdag", "Godisdagen"],
+        rightAnswer: ["Helgons kväll"],
         type: "multiple choice",
         answer: [],
     },
     {
         heading: "Fråga 3",
-        question: "Vad brukar man i folkmun normalt inte jämnföra?",
-        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
-        rightAnswer: ["Äpple", "Päron"],
-        type: "checkbox",
+        question: "Vilken är den mest populära Halloween kostymen för barn 2021?",
+        posibleAnswers: ["Elsa", "Spiderman", "Spöke", "Pumpa"],
+        rightAnswer: ["Spiderman"],
+        type: "multiple choice",
         answer: [],
     },
     {
         heading: "Fråga 4",
-        question: "Vad brukar man i folkmun normalt inte jämnföra?",
-        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
-        rightAnswer: ["Äpple", "Päron"],
+        question: "Vilket av dessa är traditionella Halloween dekorationer?",
+        posibleAnswers: ["Kittel", "Krans", "Spindel", "Pumpa"],
+        rightAnswer: ["Spindel", "Kittel", "Pumpa"],
         type: "checkbox",
         answer: [],
     },
     {
         heading: "Fråga 5",
-        question: "Vad brukar man i folkmun normalt inte jämnföra?",
-        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
-        rightAnswer: ["Äpple", "Päron"],
+        question: "Vilka är medlemmar i Addams-family?",
+        posibleAnswers: ["Gomez", "Lurch", "Morticia", "Wednesday"],
+        rightAnswer: ["Gomez", "Morticia", "Wednesday"],
         type: "checkbox",
         answer: [],
     },
     {
         heading: "Fråga 6",
-        question: "Vad brukar man i folkmun normalt inte jämnföra?",
-        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
-        rightAnswer: ["Äpple", "Päron"],
-        type: "checkbox",
+        question: 'Hette godiset"Godismajs" "Hönsfoder" innan?',
+        posibleAnswers: [],
+        rightAnswer: ["Sant"],
+        type: "true/false",
         answer: [],
     },
     {
         heading: "Fråga 7",
-        question: "Vad brukar man i folkmun normalt inte jämnföra?",
-        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
-        rightAnswer: ["Äpple", "Päron"],
-        type: "checkbox",
+        question: "Vilken är den populäraste Halloween-dräkten för husdjur?",
+        posibleAnswers: ["Spindelmannen", "Pumpa", "Häxa", "Jinker bell"],
+        rightAnswer: ["Pumpa"],
+        type: "multiple choice",
         answer: [],
     },
     {
         heading: "Fråga 8",
-        question: "Vad brukar man i folkmun normalt inte jämnföra?",
-        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
-        rightAnswer: ["Äpple", "Päron"],
-        type: "checkbox",
+        question: 'Anordnas USAs största halloweenparaden i Texas?',
+        posibleAnswers: [],
+        rightAnswer: ["Falskt"],
+        type: "true/false",
         answer: [],
     },
     {
         heading: "Fråga 9",
-        question: "Vad brukar man i folkmun normalt inte jämnföra?",
-        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
-        rightAnswer: ["Äpple", "Päron"],
-        type: "checkbox",
+        question: 'Vem skrev "The Legend of Sleepy Hollow"?',
+        posibleAnswers: ["Washington Irving", "Stephen King", "Agatha Christie", "Henry James"],
+        rightAnswer: ["Washington Irving"],
+        type: "multiple choice",
         answer: [],
     },
     {
         heading: "Fråga 10",
-        question: "Vad brukar man i folkmun normalt inte jämnföra?",
-        posibleAnswers: ["Äpple", "Päron", "Banan", "Apelsin"],
-        rightAnswer: ["Äpple", "Päron"],
-        type: "checkbox",
+        question: "Var ligger Transsylvanien, annars känd som greve Draculas hem?",
+        posibleAnswers: ["Noth Carolina", "Rumänien", "Irland", "Alaska"],
+        rightAnswer: ["Rumänien"],
+        type: "multiple choice",
         answer: [],
     },
 ];
@@ -167,12 +167,16 @@ function resetBtn(){
 welcomeMsg();
 function welcomeMsg(){
     contentWrapper.innerHTML = "";
-    let newH3 = document.createElement("h3");;
-    newH3.innerText = "Välkommen till Ankademins quiz!";
+    let newH2 = document.createElement("h2");;
+    newH2.innerText = `
+
+    Välkommen till Ankademins 
+    halloween quiz!`;
+    newH2.style.color = "darkorange";
     
     let newP = document.createElement("p");
     newP.innerText = `Tryck på startknappen för att börja spelet
-    och få 10st frågor att svara på.`
+    och få ${questions.length}st frågor att svara på.`
     
     let newBtn = document.createElement("button");
     newBtn.innerText = "Starta quizzzet!";
@@ -180,7 +184,7 @@ function welcomeMsg(){
         currentQuestion = 0;
         quiz() // Run the quiz when push startbutton
     });
-    contentWrapper.append(newH3, newP, newBtn);
+    contentWrapper.append(newH2, newP, newBtn);
 }
 
 

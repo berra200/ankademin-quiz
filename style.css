@@ -27,22 +27,28 @@
 }
 
 #header {
+    padding-left: 50px;
     line-height: 60px;
     color: black;
     background-color: rgb(180, 180, 180);
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     border-radius: 5px 5px 0px 0px;
     height: 60px;
 }
 
-#header > button{
+#header > div{
+    position: relative;
+    right: -25px;
+}
+
+#header button{
     background-color: rgb(180, 180, 180);
     height: 30px;
     width: 30px;
     box-shadow: 0 0 3px;
-    margin: 9px;
+    margin: 1px;
 }
 
 #contentWrapper {
